@@ -44,6 +44,17 @@ public class PlayerTests
 
         Assert.Equal(2, allPlayers.Count);
     }
+    [Fact]
+    public void GainXp_NegativeAmount_ShouldThrowArgumentOutOfRangeException()
+    {
+        var service = new PlayerService();
+        var player = service.CreatePlayer("Hero");
+
+        var exception = Assert.Throws<ArgumentOutOfRangeException>(() =>
+            service.GainXp(player.Id, -50));
+
+        Assert.Contains("amount", exception.Message);
+    }
 
 
 }
