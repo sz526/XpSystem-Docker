@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Xpsystem.Tests/">
+    <Project Path="Xpsystem.Tests/XpSystem.Tests.csproj" />
+  </Folder>
+  <Project Path="XpSystem/XpSystem.csproj" />
+</Solution>
