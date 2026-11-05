@@ -14,6 +14,11 @@ public class PlayerService
 
     public void GainXp(int id, int amount)
     {
+        if (amount < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(amount), "XP amount cannot be negative.");
+        }
+        
         var player = _players.First(p => p.Id == id);
         player.Xp += amount;
 
