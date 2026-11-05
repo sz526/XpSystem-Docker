@@ -25,5 +25,9 @@ public class PlayerService
             player.Level++;
         }
     }
+    public List<PlayerModel> GetAllPlayers()
+    {
+        return _players.ToList();
+    }
 
 }
