@@ -1,4 +1,4 @@
-namespace XpSystem;
+/* namespace XpSystem;
 
 public class PlayerService
 {
@@ -35,4 +35,44 @@ public class PlayerService
         return _players.ToList();
     }
 
+}
+ */
+
+ namespace XpSystem;
+
+public class PlayerService
+{
+    private readonly IPlayerRepository _repository;
+    private int _nextId = 1;
+
+    public PlayerService(IPlayerRepository repository)
+    {
+        _repository = repository;
+    }
+
+    public PlayerModel CreatePlayer(string name)
+    {
+        var player = new PlayerModel { Id = _nextId++, Name = name };
+        return _repository.Add(player);
+    }
+
+    public List<PlayerModel> GetAllPlayers()
+        => _repository.GetAll();
+
+    public void GainXp(int id, int amount)
+    {
+        if (amount < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(amount), "amount kan ikke være negativ");
+        }
+
+        var player = _repository.GetById(id) ?? throw new InvalidOperationException("Spiller ikke funnet");
+        player.Xp += amount;
+
+        while (player.Xp >= 100)
+        {
+            player.Xp -= 100;
+            player.Level++;
+        }
+    }
 }

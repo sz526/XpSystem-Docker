@@ -7,7 +7,9 @@ public class PlayerTests
     [Fact]
     public void CreatePlayer_ShouldInitializeWithUniqueIdLevelOneAndZeroXp()
     {
-        var service = new PlayerService();
+        //var service = new PlayerService();
+        var repository = new FakePlayerRepository();
+        var service = new PlayerService(repository);
 
         var player1 = service.CreatePlayer("Hero");
         var player2 = service.CreatePlayer("Mage");
@@ -21,7 +23,8 @@ public class PlayerTests
     public void GainXp_SpecificPlayerId_ShouldIncreaseXpAndLevelUp()
     {
         // Arrange
-        var service = new PlayerService();
+        var repository = new FakePlayerRepository();
+        var service = new PlayerService(repository);
         var player = service.CreatePlayer("Hero");
         // Act
         service.GainXp(player.Id, 40);
@@ -36,7 +39,8 @@ public class PlayerTests
     [Fact]
     public void GetAllPlayers_ShouldReturnAllStoredPlayers()
     {
-        var service = new PlayerService();
+        var repository = new FakePlayerRepository();
+        var service = new PlayerService(repository);
         service.CreatePlayer("Hero");
         service.CreatePlayer("Mage");
 
@@ -47,7 +51,8 @@ public class PlayerTests
     [Fact]
     public void GainXp_NegativeAmount_ShouldThrowArgumentOutOfRangeException()
     {
-        var service = new PlayerService();
+        var repository = new FakePlayerRepository();
+        var service = new PlayerService(repository);
         var player = service.CreatePlayer("Hero");
 
         var exception = Assert.Throws<ArgumentOutOfRangeException>(() =>
