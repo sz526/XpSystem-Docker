@@ -17,4 +17,20 @@ public class PlayerTests
         Assert.Equal(1, player1.Level);
         Assert.Equal(0, player1.Xp);
     }
+    [Fact]
+    public void GainXp_SpecificPlayerId_ShouldIncreaseXpAndLevelUp()
+    {
+        // Arrange
+        var service = new PlayerService();
+        var player = service.CreatePlayer("Hero");
+        // Act
+        service.GainXp(player.Id, 40);
+        Assert.Equal(40, player.Xp);
+
+        // assert that the player levels up correctly when XP reaches 100
+        service.GainXp(player.Id, 60); // total 100
+        Assert.Equal(2, player.Level);
+        Assert.Equal(0, player.Xp);
+    }
+
 }
